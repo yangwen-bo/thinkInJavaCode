@@ -49,7 +49,7 @@ public class ForCtrl {
 
     //练习5 不用Interger.toBbinaryString()用三元操作显示二进制
     public static void binaryString(){
-        int i = 0x2aa;
+        int i = 0x2aa;//十进制
         int j = 0x555;
         System.out.println("i:"+toBinaryString(i));
         System.out.println("j:"+toBinaryString(j));
@@ -61,7 +61,6 @@ public class ForCtrl {
         System.out.println("(i|j):"+toBinaryString(~(i|j)));
         System.out.println("~(i&j):"+toBinaryString(~(i&j)));
         System.out.println("(i^j):"+toBinaryString(i^j));
-
 
     }
 

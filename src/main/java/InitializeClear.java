@@ -1,3 +1,6 @@
+import com.sun.deploy.net.proxy.RemoveCommentReader;
+import com.sun.deploy.panel.DeleteFilesDialog;
+
 /**
  * @Author yangwen-bo
  * @Date 2019/10/31.
@@ -34,10 +37,26 @@ public class InitializeClear {
 
     }
 
-    public static void main(String[] args) {
+    public void main(String[] args) {
 //        InitializeClear init = new InitializeClear();
 //        System.out.println(init.str);
 
         Dog dog = new Dog();
+
+        try {
+            //垃圾回收只和内存有关（finalize也是）
+            //注意和finally不同，finalize不能在静态方法中
+            //垃圾回收只知道回收new分配的内存，所以其他并非new出来的对象的内存空间，可以使用finalize方法清理
+            //finalize中加入自定义的清除对象的方法
+            //一旦垃圾回收器准备好要释放对象占用的存储空间，将首先调用finalize方法，
+            // 并且在下一次垃圾回收动作发生的时候才会真正释放对象占用的内存
+            finalize(
+//              free() //自己的对应清除的方法
+            );
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }finally {
+
+        }
     }
 }
