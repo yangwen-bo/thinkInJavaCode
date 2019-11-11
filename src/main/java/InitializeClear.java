@@ -33,30 +33,58 @@ public class InitializeClear {
             System.out.println(i+"岁的dog");
 
         }
-
-
     }
 
     public void main(String[] args) {
 //        InitializeClear init = new InitializeClear();
 //        System.out.println(init.str);
 
-        Dog dog = new Dog();
+//        Dog dog = new Dog();
 
-        try {
-            //垃圾回收只和内存有关（finalize也是）
-            //注意和finally不同，finalize不能在静态方法中
-            //垃圾回收只知道回收new分配的内存，所以其他并非new出来的对象的内存空间，可以使用finalize方法清理
-            //finalize中加入自定义的清除对象的方法
-            //一旦垃圾回收器准备好要释放对象占用的存储空间，将首先调用finalize方法，
-            // 并且在下一次垃圾回收动作发生的时候才会真正释放对象占用的内存
-            finalize(
-//              free() //自己的对应清除的方法
-            );
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }finally {
+//        try {
+//            //垃圾回收只和内存有关（finalize也是）
+//            //注意和finally不同，finalize不能在静态方法中
+//            //不能直接调用finalize
+//            //垃圾回收只知道回收new分配的内存，所以其他并非new出来的对象的内存空间，可以使用finalize方法清理
+//            //finalize中加入自定义的清除对象的方法
+//            //一旦垃圾回收器准备好要释放对象占用的存储空间，将首先调用finalize方法，
+//            // 并且在下一次垃圾回收动作发生的时候才会真正释放对象占用的内存
+//            finalize(
+////              free() //自己的对应清除的方法
+//            );
+//        } catch (Throwable throwable) {
+//            throwable.printStackTrace();
+//        }finally {
+//
+//        }
 
+        //这里举例的是：所有的book对象都应该被签入checkIn，但如果因为疏忽，有一个没有被checkIn
+        //就调用finalize检查，检查到这个问题
+        Book novel = new Book( true );
+        novel.checkIn();
+        new Book( true );
+        System.gc();//用来强制的进行终结操作
+
+
+    }
+
+    //内部类，用来示范finalize可能用到的情况
+    class Book{
+        boolean checkOut = false;
+        Book(boolean checkOut){
+            this.checkOut = checkOut;
+        }
+
+        void checkIn(){
+            checkOut = false;
+        }
+
+        protected void finalize(){
+            if(checkOut){
+//                String.format( "", )//string的一个格式化方法
+                System.out.println("error : checked out");
+            }
         }
     }
+
 }
